@@ -11,12 +11,14 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveDirection;
     private bool _isFacinRight = true;
 
+    public static Vector2 _direccionApunta = Vector2.right;
+
     // Input Movimiento
     float horizontalMovement;
     float verticalMovement;
 
     // Referencias
-    private Rigidbody2D _rigidbody;
+    public static Rigidbody2D _rigidbody;
 
     private void Awake()
     {
@@ -59,6 +61,15 @@ public class PlayerMovement : MonoBehaviour
         verticalMovement = Input.GetAxisRaw("Vertical");
 
         moveDirection = new Vector2(horizontalMovement, verticalMovement).normalized;
+
+        Vector2 _direccion = new Vector2(horizontalMovement, verticalMovement);
+
+        if (_direccion != Vector2.zero)
+        {
+        _direccionApunta = _direccion.normalized;
+
+        }
+
     }
 
     private void Move()
