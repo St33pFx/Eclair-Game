@@ -25,8 +25,8 @@ public class CruzArrojadiza : WeaponController
     protected override void Attack()
     {
 
-        Rigidbody2D _nuevoClon = Instantiate(_projectile, _puntoDeDisparo.position, _puntoDeDisparo.rotation);
-        _nuevoClon.velocity = PlayerMovement._direccionApunta * _velocidadDisparo + PlayerMovement._rigidbody.velocity;
+        Rigidbody2D _nuevoClon = Instantiate(_projectile, _puntoDeDisparo.position, PlayerMovement.rotacin);
+        _nuevoClon.velocity = PlayerMovement._direccionApunta * _velocidadDisparo;
         gameObject.GetComponent<SpriteRenderer>();
         // Cooldown para poder disparar nuevamente.
         _cooldownActual = _cooldownDuracion;

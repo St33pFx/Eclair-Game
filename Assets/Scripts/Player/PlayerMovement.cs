@@ -13,6 +13,10 @@ public class PlayerMovement : MonoBehaviour
 
     public static Vector2 _direccionApunta = Vector2.right;
 
+    public static Vector2 _orientacionObjeto;
+    public static float angulo;
+    public static Quaternion rotacin;
+
     // Input Movimiento
     float horizontalMovement;
     float verticalMovement;
@@ -22,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        
+        Debug.Log($"Hola amiguitos!");
     }
 
     // Start is called before the first frame update
@@ -62,6 +66,9 @@ public class PlayerMovement : MonoBehaviour
 
         moveDirection = new Vector2(horizontalMovement, verticalMovement).normalized;
 
+        angulo = MathF.Atan2(_direccionApunta.y, _direccionApunta.x) * Mathf.Rad2Deg;
+        rotacin = Quaternion.Euler(0, 0, angulo - 90);
+
         Vector2 _direccion = new Vector2(horizontalMovement, verticalMovement);
 
         if (_direccion != Vector2.zero)
@@ -69,6 +76,8 @@ public class PlayerMovement : MonoBehaviour
         _direccionApunta = _direccion.normalized;
 
         }
+
+
 
     }
 

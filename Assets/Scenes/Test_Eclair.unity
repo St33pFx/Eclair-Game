@@ -10804,7 +10804,7 @@ MonoBehaviour:
   _perforacion: 0
   _projectile: {fileID: 2129560020842556165, guid: 90358250c22fc9441a8fd6238e7e682d, type: 3}
   _puntoDeDisparo: {fileID: 697551099}
-  _velocidadDisparo: 10
+  _velocidadDisparo: 20
 --- !u!1 &697551098
 GameObject:
   m_ObjectHideFlags: 0
