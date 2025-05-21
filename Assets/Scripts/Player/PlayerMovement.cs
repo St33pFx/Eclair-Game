@@ -1,11 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Enemy;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // Vital Personake
+    private int maxVida = 3;
+    public int vidaActual;
+    private bool _esInmune = false;
+    
     // Movimiento
     public float speedMovement = 2f;
     private Vector2 moveDirection;
@@ -27,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         Debug.Log($"Hola amiguitos!");
+        vidaActual = maxVida;
     }
 
     // Start is called before the first frame update
@@ -93,6 +100,34 @@ public class PlayerMovement : MonoBehaviour
         gameObject.transform.localScale = currentScale;
 
         _isFacinRight = !_isFacinRight;
+    }
+
+    public void RecibirDaño(int daño = 1)
+    {
+        vidaActual -= daño;
+        if (vidaActual <= 0)
+        {
+            vidaActual = 0;
+            this.gameObject.SetActive(false);
+            return; 
+        }
+        StartCoroutine(Cooldown(3f));
+    }
+    
+    private IEnumerator Cooldown(float segundos)
+    {
+        _esInmune = true;
+        yield return new WaitForSeconds(segundos);
+        _esInmune = false;
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy") && _esInmune == false)
+        {
+            RecibirDaño();
+            Debug.Log($"Ahora tienes: {vidaActual}");
+        }
     }
     
 }
