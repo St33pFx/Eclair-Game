@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class PlayerMovement : MonoBehaviour
 {
     // Vital Personake
-    private int maxVida = 3;
+    private int maxVida = 20;
     public int vidaActual;
     private bool _esInmune = false;
     
@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     // Input Movimiento
     float horizontalMovement;
     float verticalMovement;
+    
+    private DamageFlash _damageFlash;
 
     // Referencias
     public static Rigidbody2D _rigidbody;
@@ -37,9 +39,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        _damageFlash = GetComponent<DamageFlash>();
     }
 
     // Update is called once per frame
@@ -111,7 +114,9 @@ public class PlayerMovement : MonoBehaviour
             this.gameObject.SetActive(false);
             return; 
         }
-        StartCoroutine(Cooldown(3f));
+
+        _damageFlash.LlamarFlashDaño();
+        StartCoroutine(Cooldown(1f));
     }
     
     private IEnumerator Cooldown(float segundos)
