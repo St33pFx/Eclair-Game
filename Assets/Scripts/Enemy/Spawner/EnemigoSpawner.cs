@@ -57,7 +57,7 @@ public class EnemigoSpawner : MonoBehaviour
 
             if (_enemigos.Count <= numeroMaxEnemigos)
             {
-            SpawnEnemigo();
+                SpawnEnemigo();
             }
         }
     }

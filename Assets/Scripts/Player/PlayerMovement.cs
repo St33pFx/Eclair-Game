@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class PlayerMovement : MonoBehaviour
 {
     // Vital Personake
-    private int maxVida = 20;
+    private int maxVida = 4;
     public int vidaActual;
     private bool _esInmune = false;
     
