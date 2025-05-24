@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   despawnDistancia: 6.9
-  tiempoProteccionDespawn: 5.5
+  tiempoProteccionDespawn: 3
 --- !u!1 &7156194497721845201
 GameObject:
   m_ObjectHideFlags: 0

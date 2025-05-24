@@ -13,7 +13,11 @@ public class EnemigoDespawn : MonoBehaviour
     [SerializeField] private float tiempoProteccionDespawn = 10f;   
     private void Awake()
     {
+        if (jugadorPos == null)
+        {
         jugadorPos = GameObject.FindWithTag("Player").transform;
+            
+        }
         StartCoroutine(ProteccionDespawn());
     }
 
