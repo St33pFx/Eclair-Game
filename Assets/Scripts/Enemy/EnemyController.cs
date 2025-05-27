@@ -7,12 +7,15 @@ namespace Enemy
 {
     public abstract class EnemyController : MonoBehaviour
     {
-        public int vidaMax;
         public int enemigoDamage = 1;
         public float velocidadMovimiento = 1f;
         public float radio = 20f;
 
+        [Header("Enemigo Vida")]
+        public int vidaMax = 2;
         public int _vidaActual;
+
+        [SerializeField] protected GameObject objetoDrop;
 
         private void Start()
         {
@@ -25,20 +28,23 @@ namespace Enemy
             _vidaActual = vidaMax;
         }
 
-        protected void ActualizarVida(int nuevaVida)
-        {
-            _vidaActual = nuevaVida;
-        }
-
-        public void RecibirDaño(int daño)
+        public virtual void RecibirDaño(int daño)
         {
             _vidaActual -= daño;
+
             if (_vidaActual <= 0)
             {
                 _vidaActual = 0;
                 Morir();
             }
         }
+        
+        protected void ActualizarVida(int nuevaVida)
+        {
+            _vidaActual = nuevaVida;
+        }
+
+        
 
         protected virtual void Morir()
         {

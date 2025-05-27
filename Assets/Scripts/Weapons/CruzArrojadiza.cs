@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -15,6 +16,7 @@ public class CruzArrojadiza : WeaponController
     public Rigidbody2D _projectile;
     public Transform _puntoDeDisparo;
     public float _velocidadDisparo;
+    private bool _haColision;
 
     private void Awake()
     {
@@ -23,6 +25,8 @@ public class CruzArrojadiza : WeaponController
             Debug.LogError($"Te hace falta poner el {_puntoDeDisparo} papu.");
         }
     }
+
+    
 
     protected override void Attack()
     {

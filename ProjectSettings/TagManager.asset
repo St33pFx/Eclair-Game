@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - MuroENemigos
+  - Proyectil
   layers:
   - Default
   - TransparentFX

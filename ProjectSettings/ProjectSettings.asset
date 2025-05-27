@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: DefaultCompany
   productName: EclairMain
-  defaultCursor: {fileID: 0}
+  defaultCursor: {fileID: 2800000, guid: b254f57f1adea7e4abe921b64a55982f, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.05660379, g: 0.049928814, b: 0.05159756, a: 1}
   m_ShowUnitySplashScreen: 1

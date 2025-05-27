@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class PlayerMovement : MonoBehaviour
 {
     // Vital Personake
-    private int maxVida = 4;
+    [SerializeField]private int _maxVida = 4;
     public int vidaActual;
     private bool _esInmune = false;
     
@@ -28,14 +28,20 @@ public class PlayerMovement : MonoBehaviour
     float verticalMovement;
     
     private DamageFlash _damageFlash;
+    private Animator _animator;
 
     // Referencias
     public static Rigidbody2D _rigidbody;
 
+    [Header("Blood Points")]
+    private int _NuevoNivel = 50;
+    private int _bloodPoints;
+
     private void Awake()
     {
         Debug.Log($"Hola amiguitos!");
-        vidaActual = maxVida;
+        vidaActual = _maxVida;
+        _animator = GetComponent<Animator>();
     }
 
     // Start is called before the first frame update
@@ -86,6 +92,8 @@ public class PlayerMovement : MonoBehaviour
         _direccionApunta = _direccion.normalized;
 
         }
+        
+        _animator.SetBool("idle", moveDirection == Vector2.zero);
 
 
 
@@ -132,6 +140,18 @@ public class PlayerMovement : MonoBehaviour
         {
             RecibirDaño();
             Debug.Log($"Ahora tienes: {vidaActual}");
+        }
+    }
+    
+    // Agregar Puntos de sangre al jugador
+
+    public void AgregarBloodPoints(int bloodpoints)
+    {
+        bloodpoints += _bloodPoints;
+
+        if (bloodpoints == _NuevoNivel)
+        {
+            // Implementar nueva arma xd
         }
     }
     
