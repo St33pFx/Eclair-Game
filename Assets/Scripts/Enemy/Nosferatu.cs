@@ -13,6 +13,8 @@ public class Nosferatu : EnemyController, IEnemigoSpawneable
 
 
     private EnemigoSpawner spawner;
+    private DamageFlash _damageFlash;
+    private Nosferatu _nosferatu;
 
     public void ReferenciarSpawn(EnemigoSpawner spwn)
     {
@@ -20,12 +22,12 @@ public class Nosferatu : EnemyController, IEnemigoSpawneable
     }
     
     
-    private Nosferatu _nosferatu;
 
     private void Awake()
     {
         enemyRb = GetComponent<Rigidbody2D>();
         playerTransform = GameObject.FindWithTag("Player")?.transform;
+        _damageFlash = GetComponent<DamageFlash>();
 
         if (playerTransform == null)
         {
@@ -58,12 +60,20 @@ public class Nosferatu : EnemyController, IEnemigoSpawneable
         
     }
 
+    public override void RecibirDaño(int daño)
+    {
+        _damageFlash.LlamarFlashDaño();
+        base.RecibirDaño(daño);
+        Debug.Log($"Recibiendo {daño}");
+    }
+
     protected override void Morir()
     {
         if (spawner != null)
         {
             spawner.EliminarEnemigo(this.gameObject);
         }
+        Instantiate(objetoDrop, transform.position, Quaternion.identity);
         Destroy(this.gameObject);
     }
 
