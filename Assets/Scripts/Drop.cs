@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Drop : MonoBehaviour
 {
-    [SerializeField]private int bloodPint = 10;
+    [SerializeField]private int bloodPint = 5;
     
     // Referencia Jugador
     private GameObject player;

@@ -17,6 +17,9 @@ public class WeaponShoot : MonoBehaviour
     private float _cooldownDisparo = 0.5f;
     private float cooldownActual = 0f;
     private bool _puedeDisparar = true;
+    
+    [SerializeField] private AudioSource fuenteDisparo;
+    [SerializeField] private AudioClip sonidoDisparo;
 
     private void Awake()
     {
@@ -25,7 +28,9 @@ public class WeaponShoot : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.juegoPausado) return;
         EjecutarDisparo();
+        
     }
 
     private IEnumerator CoolDown()
@@ -42,10 +47,20 @@ public class WeaponShoot : MonoBehaviour
             GameObject _balaCLon = Instantiate(proyectilPrefab, shootPoint.transform.position, shootPoint.transform.rotation);
             _balaCLon.GetComponent<Rigidbody2D>().velocity = shootPoint.right * velocidadBala;
             _puedeDisparar = false;
+            DispararSonido();
             StartCoroutine(CoolDown());
         }
 
         
+    }
+
+    
+    private void DispararSonido()
+    {
+        if (sonidoDisparo != null && fuenteDisparo != null)
+        {
+            fuenteDisparo.PlayOneShot(sonidoDisparo);
+        }
     }
     
 }

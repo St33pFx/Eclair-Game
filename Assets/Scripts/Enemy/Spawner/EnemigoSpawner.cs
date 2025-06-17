@@ -12,6 +12,8 @@ public class EnemigoSpawner : MonoBehaviour
     
     // prefab a instanciar 
     [SerializeField] private GameObject enemigoPrefab;
+    [SerializeField] private GameObject enemigoPrefab2;
+    [SerializeField] private GameObject enemigoPrefab3;
     
     // Referenciar al jugador (su posicion krak)
     [SerializeField] private Transform jugador;
@@ -59,7 +61,7 @@ public class EnemigoSpawner : MonoBehaviour
             {
                 SpawnEnemigo();
             }
-        }
+        } 
     }
 
     private void SpawnEnemigo()

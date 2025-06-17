@@ -11,10 +11,14 @@ public class Nosferatu : EnemyController, IEnemigoSpawneable
     [SerializeField] private Rigidbody2D enemyRb;
     private Transform playerTransform;
 
+    [SerializeField] private AudioClip SonidoImpactos;
 
     private EnemigoSpawner spawner;
     private DamageFlash _damageFlash;
     private Nosferatu _nosferatu;
+    private bool isFacingRight = true;
+    
+    [SerializeField] private Vector2 direccion;
 
     public void ReferenciarSpawn(EnemigoSpawner spwn)
     {
@@ -35,14 +39,18 @@ public class Nosferatu : EnemyController, IEnemigoSpawneable
         }
 
     }
-    
 
+    void Update()
+    {
+        GirarEnemigo();
+    }
+     
     private void FixedUpdate()
     {
         if (playerTransform == null) return;
         
         // Direccion crea un vector y NuevaDireccion crea el movimiento 
-        Vector2 direccion = ((Vector2)(playerTransform.position - transform.position)).normalized;
+        direccion = ((Vector2)(playerTransform.position - transform.position)).normalized;
         Vector2 nuevaDireccion = (Vector2)transform.position + direccion * velocidadMovimiento * Time.fixedDeltaTime; 
         
         // If para evitar que se glitchee el nosferatu
@@ -62,6 +70,7 @@ public class Nosferatu : EnemyController, IEnemigoSpawneable
 
     public override void RecibirDaño(int daño)
     {
+        AudioManager.Instance.PlaySonido(SonidoImpactos);
         _damageFlash.LlamarFlashDaño();
         base.RecibirDaño(daño);
         Debug.Log($"Recibiendo {daño}");
@@ -77,6 +86,27 @@ public class Nosferatu : EnemyController, IEnemigoSpawneable
         Destroy(this.gameObject);
     }
 
+    private void GirarEnemigo()
+    {
+        if (direccion.x < 0 && isFacingRight)
+        {
+            FlipCharacter();
+        }
+
+        else if (direccion.x > 0 && !isFacingRight)
+        {
+            FlipCharacter();
+        }
+}
     
-    
+    private void FlipCharacter()
+    {
+        Vector3 currentScale = gameObject.transform.localScale;
+        currentScale.x *= -1;
+        gameObject.transform.localScale = currentScale;
+
+        isFacingRight = !isFacingRight;
+    }
+
+
 }
