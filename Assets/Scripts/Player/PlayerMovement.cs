@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class PlayerMovement : MonoBehaviour
 {
     // Vital Personake
-    [SerializeField]private int _maxVida = 4;
+    [SerializeField]private int _maxVida = 5;
     public int vidaActual;
     private bool _esInmune = false;
     
@@ -29,9 +29,15 @@ public class PlayerMovement : MonoBehaviour
     
     private DamageFlash _damageFlash;
     private Animator _animator;
+    private HealthSystem _healthSystem;
 
     // Referencias
     public static Rigidbody2D _rigidbody;
+    [SerializeField] private ExperienceManager xp;
+    [SerializeField] private GameObject _panelMuerte;
+    
+    [SerializeField] private AudioSource fuentePasos;
+    [SerializeField] private AudioClip sonidoPasos;
 
     [Header("Blood Points")]
     private int _NuevoNivel = 50;
@@ -42,6 +48,8 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log($"Hola amiguitos!");
         vidaActual = _maxVida;
         _animator = GetComponent<Animator>();
+        _healthSystem = FindObjectOfType<HealthSystem>();
+        
     }
 
     // Start is called before the first frame update
@@ -55,6 +63,9 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         InputMovement();
+        ReproducirPasos();
+
+        
 
         // Girar personaje
 
@@ -115,17 +126,28 @@ public class PlayerMovement : MonoBehaviour
 
     public void RecibirDaño(int daño = 1)
     {
+        if(_esInmune) return;
+        
         vidaActual -= daño;
+        vidaActual = Mathf.Clamp(vidaActual, 0, _maxVida);
+        
+        _healthSystem.ActualizarCorazones(vidaActual);
+
+      
+
         if (vidaActual <= 0)
         {
             vidaActual = 0;
+            _panelMuerte.SetActive(true);
+            GameManager.Pausa();
             this.gameObject.SetActive(false);
             return; 
         }
-
+    
         _damageFlash.LlamarFlashDaño();
         StartCoroutine(Cooldown(1f));
     }
+    
     
     private IEnumerator Cooldown(float segundos)
     {
@@ -147,11 +169,28 @@ public class PlayerMovement : MonoBehaviour
 
     public void AgregarBloodPoints(int bloodpoints)
     {
+        xp.AgregarExperiencia(bloodpoints);
         bloodpoints += _bloodPoints;
 
         if (bloodpoints == _NuevoNivel)
         {
             // Implementar nueva arma xd
+        }
+    }
+
+    private bool _estaCaminando;
+    private void ReproducirPasos()
+    {
+        _estaCaminando = moveDirection != Vector2.zero;
+
+        if (_estaCaminando && !fuentePasos.isPlaying)
+        {
+            fuentePasos.clip = sonidoPasos;
+            fuentePasos.Play();
+        }
+        else if (!_estaCaminando && fuentePasos.isPlaying)
+        {
+            fuentePasos.Stop();
         }
     }
     
