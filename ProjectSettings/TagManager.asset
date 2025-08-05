@@ -7,6 +7,9 @@ TagManager:
   - Enemy
   - MuroENemigos
   - Proyectil
+  - noPaso
+  - Arma
+  - noSpawn
   layers:
   - Default
   - TransparentFX
@@ -17,10 +20,10 @@ TagManager:
   - Enemigos Ignorar Muro
   - Enemigos
   - Weapons
-  - 
-  - 
-  - 
-  - 
+  - Obstaculo
+  - NoPas
+  - Player
+  - Terrain
   - 
   - 
   - 
@@ -52,4 +55,7 @@ TagManager:
     locked: 0
   - name: Holding
     uniqueID: 3243353191
+    locked: 0
+  - name: UI
+    uniqueID: 3161863271
     locked: 0

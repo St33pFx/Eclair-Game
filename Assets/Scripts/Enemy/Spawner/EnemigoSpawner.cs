@@ -42,7 +42,7 @@ public class EnemigoSpawner : MonoBehaviour
     }
     
     // Metodo para la posicion aleatoria
-    private Vector2 SpawnEnemigoPos()
+    public Vector2 SpawnEnemigoPos()
     {
         Vector2 direccionAleatoria = Random.insideUnitCircle.normalized;
         float distancia = Random.Range(visionMinima, visionMaxima);
@@ -59,14 +59,14 @@ public class EnemigoSpawner : MonoBehaviour
 
             if (_enemigos.Count <= numeroMaxEnemigos)
             {
-                SpawnEnemigo();
+               // SpawnEnemigo();
             }
         } 
     }
 
-    private void SpawnEnemigo()
+    public void SpawnEnemigo(GameObject enemigo)
     {
-        GameObject _nuevoEnemigo = Instantiate(enemigoPrefab, SpawnEnemigoPos(), Quaternion.identity);
+        GameObject _nuevoEnemigo = Instantiate(enemigo, SpawnEnemigoPos(), Quaternion.identity);
         _nuevoEnemigo.GetComponent<EnemigoDespawn>().SetSpawner(this);
         IEnemigoSpawneable enemigoSpawneable = _nuevoEnemigo.GetComponent<IEnemigoSpawneable>();
         enemigoSpawneable.ReferenciarSpawn(this);

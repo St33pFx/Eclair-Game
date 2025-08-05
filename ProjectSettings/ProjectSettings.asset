@@ -801,23 +801,23 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: DOTWEEN
-    EmbeddedLinux: DOTWEEN
-    GameCoreScarlett: DOTWEEN
-    GameCoreXboxOne: DOTWEEN
-    LinuxHeadlessSimulation: DOTWEEN
-    Nintendo Switch: DOTWEEN
-    PS4: DOTWEEN
-    PS5: DOTWEEN
-    QNX: DOTWEEN
-    Stadia: DOTWEEN
-    Standalone: DOTWEEN
-    VisionOS: DOTWEEN
-    WebGL: DOTWEEN
-    Windows Store Apps: DOTWEEN
-    XboxOne: DOTWEEN
-    iPhone: DOTWEEN
-    tvOS: DOTWEEN
+    Android: DOTWEEN;ASTAR_LARGER_GRIDS
+    EmbeddedLinux: DOTWEEN;ASTAR_LARGER_GRIDS
+    GameCoreScarlett: DOTWEEN;ASTAR_LARGER_GRIDS
+    GameCoreXboxOne: DOTWEEN;ASTAR_LARGER_GRIDS
+    LinuxHeadlessSimulation: DOTWEEN;ASTAR_LARGER_GRIDS
+    Nintendo Switch: DOTWEEN;ASTAR_LARGER_GRIDS
+    PS4: DOTWEEN;ASTAR_LARGER_GRIDS
+    PS5: DOTWEEN;ASTAR_LARGER_GRIDS
+    QNX: DOTWEEN;ASTAR_LARGER_GRIDS
+    Stadia: DOTWEEN;ASTAR_LARGER_GRIDS
+    Standalone: DOTWEEN;ASTAR_LARGER_GRIDS
+    VisionOS: DOTWEEN;ASTAR_LARGER_GRIDS
+    WebGL: DOTWEEN;ASTAR_LARGER_GRIDS
+    Windows Store Apps: DOTWEEN;ASTAR_LARGER_GRIDS
+    XboxOne: DOTWEEN;ASTAR_LARGER_GRIDS
+    iPhone: DOTWEEN;ASTAR_LARGER_GRIDS
+    tvOS: DOTWEEN;ASTAR_LARGER_GRIDS
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}

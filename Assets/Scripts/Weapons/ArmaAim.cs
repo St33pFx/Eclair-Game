@@ -37,7 +37,8 @@ public class ArmaAim : MonoBehaviour
      
     private void ArmaApuntando()
     {
-        _mousePos = _cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f));
+        _mousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
+        _mousePos.z = transform.position.z;
     }
 
     private void AramaSeguirCursor()

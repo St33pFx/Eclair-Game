@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class Drop : MonoBehaviour
 {
-    [SerializeField]private int bloodPint = 5;
-    
+    public int bloodPint = 50;
+    [SerializeField] private int xpAmount = 10;                
+
+
     // Referencia Jugador
     private GameObject player;
-    
+    private PlayerStats playerStats;
+
+
     [SerializeField] private float radioAtraccion = 1f;
     [SerializeField] private float velocidadAtraccion = 10f;
 
@@ -17,6 +21,8 @@ public class Drop : MonoBehaviour
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+            playerStats = player.GetComponent<PlayerStats>();
     }
 
     private void Update()
@@ -29,13 +35,16 @@ public class Drop : MonoBehaviour
         
         if (other.gameObject.CompareTag("Player"))
         {
-            PlayerMovement player = other.gameObject.GetComponent<PlayerMovement>();
+            var pm = other.GetComponent<PlayerMovement>();
+            if (pm != null)
+                pm.AgregarBloodPoints(bloodPint);
+            playerStats.AumentarBloodPoints(bloodPint);
 
-            if (player != null)
-            {
-                player.AgregarBloodPoints(bloodPint);
-                Destroy(this.gameObject);
-            }
+
+            if (playerStats != null)
+                playerStats.AumentarExperiencia(xpAmount);
+
+            Destroy(gameObject);
         }
     }
     

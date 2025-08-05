@@ -9,15 +9,18 @@ using UnityEngine;
 public class Nosferatu : EnemyController, IEnemigoSpawneable
 {
     [SerializeField] private Rigidbody2D enemyRb;
-    private Transform playerTransform;
-
+    
     [SerializeField] private AudioClip SonidoImpactos;
 
     private EnemigoSpawner spawner;
     private DamageFlash _damageFlash;
     private Nosferatu _nosferatu;
     private bool isFacingRight = true;
-    
+    private Transform playerTransform;
+
+    public float despawnDistance = 20f;
+    Transform player;
+
     [SerializeField] private Vector2 direccion;
 
     public void ReferenciarSpawn(EnemigoSpawner spwn)
@@ -40,27 +43,37 @@ public class Nosferatu : EnemyController, IEnemigoSpawneable
 
     }
 
+    private void Start()
+    {
+        player = FindObjectOfType<PlayerMovement>().transform;
+    }
+
     void Update()
     {
         GirarEnemigo();
-    }
-     
-    private void FixedUpdate()
-    {
-        if (playerTransform == null) return;
-        
-        // Direccion crea un vector y NuevaDireccion crea el movimiento 
-        direccion = ((Vector2)(playerTransform.position - transform.position)).normalized;
-        Vector2 nuevaDireccion = (Vector2)transform.position + direccion * velocidadMovimiento * Time.fixedDeltaTime; 
-        
-        // If para evitar que se glitchee el nosferatu
-        // Vector distance devuelve la distancia entre puntos a y b
-        if (Vector2.Distance((Vector2)playerTransform.position, (Vector2)transform.position) > 0.1f)
+
+        if (Vector2.Distance(transform.position, player.position) >= despawnDistance)
         {
-            // MovePosition mueve el rigid body a una posicion especificada, acuerdate papui 
-            enemyRb.MovePosition(nuevaDireccion);
+            ReturnEnemy();
         }
     }
+     
+    //private void FixedUpdate()
+    //{
+    //    if (playerTransform == null) return;
+        
+    //    // Direccion crea un vector y NuevaDireccion crea el movimiento 
+    //    direccion = ((Vector2)(playerTransform.position - transform.position)).normalized;
+    //    Vector2 nuevaDireccion = (Vector2)transform.position + direccion * velocidadMovimiento * Time.fixedDeltaTime; 
+        
+    //    // If para evitar que se glitchee el nosferatu
+    //    // Vector distance devuelve la distancia entre puntos a y b
+    //    if (Vector2.Distance((Vector2)playerTransform.position, (Vector2)transform.position) > 0.1f)
+    //    {
+    //        // MovePosition mueve el rigid body a una posicion especificada, acuerdate papui 
+    //        enemyRb.MovePosition(nuevaDireccion);
+    //    }
+    //}
 
     public void EstablecerSpawn(EnemigoSpawner spwn)
     {
@@ -83,6 +96,10 @@ public class Nosferatu : EnemyController, IEnemigoSpawneable
             spawner.EliminarEnemigo(this.gameObject);
         }
         Instantiate(objetoDrop, transform.position, Quaternion.identity);
+        
+        EnemySpawner_2 es = FindObjectOfType<EnemySpawner_2>();
+        es.OnEnemyKilled();
+
         Destroy(this.gameObject);
     }
 
@@ -108,5 +125,10 @@ public class Nosferatu : EnemyController, IEnemigoSpawneable
         isFacingRight = !isFacingRight;
     }
 
+    void ReturnEnemy()
+    {
+        EnemySpawner_2 es = FindObjectOfType<EnemySpawner_2>();
+        transform.position = player.position + es.relativeSpawnPoints[UnityEngine.Random.Range(0, es.relativeSpawnPoints.Count)].position;
+    }
 
 }
