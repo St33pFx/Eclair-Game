@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,14 +17,15 @@ public class WeaponShoot : MonoBehaviour
     private int _danio = 1;
     private float _cooldownDisparo = 0.5f;
     private float cooldownActual = 0f;
-    private bool _puedeDisparar = true;
+    public bool _puedeDisparar = true;
+    private CinemachineImpulseSource impulseSource;
     
     [SerializeField] private AudioSource fuenteDisparo;
     [SerializeField] private AudioClip sonidoDisparo;
 
-    private void Awake()
+    private void Start()
     {
-        
+        impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
     private void Update()
@@ -47,6 +49,7 @@ public class WeaponShoot : MonoBehaviour
             GameObject _balaCLon = Instantiate(proyectilPrefab, shootPoint.transform.position, shootPoint.transform.rotation);
             _balaCLon.GetComponent<Rigidbody2D>().velocity = shootPoint.right * velocidadBala;
             _puedeDisparar = false;
+            CameraShakeManager.instance.CameraShake(impulseSource);
             DispararSonido();
             StartCoroutine(CoolDown());
         }

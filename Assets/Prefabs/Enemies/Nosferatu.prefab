@@ -95,11 +95,16 @@ GameObject:
   - component: {fileID: 7091649823436786256}
   - component: {fileID: 9090995137000434862}
   - component: {fileID: 6754915395209197323}
-  - component: {fileID: 5273569018196492186}
   - component: {fileID: 8294913189324162240}
   - component: {fileID: 5115958925267448778}
   - component: {fileID: 3101963186205353995}
   - component: {fileID: 4871702163989716979}
+  - component: {fileID: 3582541805262870615}
+  - component: {fileID: 3098696063213354963}
+  - component: {fileID: 1249408257674717610}
+  - component: {fileID: 9166225743566242989}
+  - component: {fileID: 7493936945420682159}
+  - component: {fileID: -9076956026975060992}
   m_Layer: 7
   m_Name: Nosferatu
   m_TagString: Enemy
@@ -116,8 +121,8 @@ Transform:
   m_GameObject: {fileID: 4931328616508677983}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.24, y: 7.07, z: 0.045125507}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1146989645600144470}
@@ -161,8 +166,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 823316549
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 527367747, guid: 348b1e7b755008d469468b19236fc8d8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -272,27 +277,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.4}
   m_Size: {x: 0.79, y: 1.24}
   m_Direction: 0
---- !u!114 &5273569018196492186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4931328616508677983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e5737c90dbf6704aa80fb4166ddb6e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemigoDamage: 1
-  velocidadMovimiento: 3
-  radio: 20
-  vidaMax: 2
-  _vidaActual: 2
-  objetoDrop: {fileID: 7383888815404154450, guid: 3642a8d254f0d9f41a2726b12ae9d79e, type: 3}
-  enemyRb: {fileID: 7091649823436786256}
-  SonidoImpactos: {fileID: 8300000, guid: 3990da8848a63624994f89264b8de936, type: 3}
-  direccion: {x: 0, y: 0}
 --- !u!114 &8294913189324162240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,6 +422,164 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3582541805262870615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4931328616508677983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 3b3e3e310000000045d0123167a451c1
+  m_ShapePath:
+  - {x: 0.5660372, y: 0.020214558, z: 0}
+  - {x: 0.32842827, y: 0.15098333, z: 0}
+  - {x: 0.10078907, y: 0.3944316, z: 0}
+  - {x: -0.0728693, y: 0.3694992, z: 0}
+  - {x: -0.34934616, y: 0.29746485, z: 0}
+  - {x: -0.2834692, y: 0.1986494, z: 0}
+  - {x: -0.2853365, y: 0.11834288, z: 0}
+  - {x: -0.19612217, y: 0.023376465, z: 0}
+  m_ShapePathHash: 1141061685
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -1346
+  m_LocalBounds:
+    m_Center: {x: 0.10834551, y: 0.20732307, z: 0}
+    m_Extent: {x: 0.45769167, y: 0.18710852, z: 0}
+--- !u!114 &3098696063213354963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4931328616508677983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1073741824
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
+--- !u!114 &1249408257674717610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4931328616508677983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1073741824
+  radius: 0.5
+  height: 2
+  canMove: 1
+  maxSpeed: 1.5
+  gravity: {x: NaN, y: NaN, z: NaN}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  endReachedDistance: 0.2
+  whenCloseToDestination: 1
+  rvoDensityBehavior:
+    enabled: 1
+    densityThreshold: 0.5
+    returnAfterBeingPushedAway: 0
+    progressAverage: 0
+    lastJobDensityResult: 0
+  repathRateCompatibility: NaN
+  canSearchCompability: 0
+  orientation: 1
+  enableRotation: 0
+  autoRepath:
+    mode: 1
+    period: 0.5
+    sensitivity: 10
+    maximumPeriod: 2
+    visualizeSensitivity: 0
+  maxAcceleration: -2.5
+  rotationSpeed: 360
+  slowdownDistance: 0.6
+  pickNextWaypointDist: 2
+  alwaysDrawGizmos: 0
+  slowWhenNotFacingTarget: 1
+  preventMovingBackwards: 0
+  constrainInsideGraph: 0
+--- !u!114 &9166225743566242989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4931328616508677983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1073741824
+  target: {fileID: 2624218063546599816, guid: 988932c82ab61a24fa20578b1d109eb7, type: 3}
+  useRotation: 0
+--- !u!114 &7493936945420682159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4931328616508677983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 927f4d271ab434542a9b69568a05d81d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-9076956026975060992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4931328616508677983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e5737c90dbf6704aa80fb4166ddb6e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemigoDamage: 1
+  velocidadMovimiento: 2
+  radio: 20
+  vidaMax: 2
+  _vidaActual: 2
+  objetoDrop: {fileID: 7383888815404154450, guid: 3642a8d254f0d9f41a2726b12ae9d79e, type: 3}
+  enemyRb: {fileID: 7091649823436786256}
+  SonidoImpactos: {fileID: 8300000, guid: 3990da8848a63624994f89264b8de936, type: 3}
+  despawnDistance: 13
+  direccion: {x: 0, y: 0}
 --- !u!1 &7156194497721845201
 GameObject:
   m_ObjectHideFlags: 0

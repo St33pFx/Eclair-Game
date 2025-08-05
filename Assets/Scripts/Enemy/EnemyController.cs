@@ -1,3 +1,4 @@
+using Discord;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace Enemy
         public float velocidadMovimiento = 1f;
         public float radio = 20f;
 
+        
+
         [Header("Enemigo Vida")]
         public int vidaMax = 2;
         public int _vidaActual;
@@ -20,9 +23,10 @@ namespace Enemy
         private void Start()
         {
             VidaInicial();
+            
         }
 
-        // Metodos
+               // Metodos
         public void VidaInicial()
         {
             _vidaActual = vidaMax;
@@ -48,9 +52,12 @@ namespace Enemy
 
         protected virtual void Morir()
         {
+            
             Destroy(gameObject);
             // Insertar animacion de muerte mas tarde...
         }
+
+        
         
     }
 }

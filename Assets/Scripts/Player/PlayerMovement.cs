@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     
     // Movimiento
     public float speedMovement = 2f;
-    private Vector2 moveDirection;
+    public Vector2 moveDirection;
     private bool _isFacinRight = true;
 
     public static Vector2 _direccionApunta = Vector2.right;
@@ -30,9 +30,12 @@ public class PlayerMovement : MonoBehaviour
     private DamageFlash _damageFlash;
     private Animator _animator;
     private HealthSystem _healthSystem;
+    [SerializeField] private CruzArrojadiza cruzArrojadiza;
 
     // Referencias
     public static Rigidbody2D _rigidbody;
+    [SerializeField] private WeaponShoot _weaponShoot;
+
     [SerializeField] private ExperienceManager xp;
     [SerializeField] private GameObject _panelMuerte;
     
@@ -55,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        _weaponShoot = GameObject.FindGameObjectWithTag("Arma").GetComponent<WeaponShoot>();
+
         _rigidbody = GetComponent<Rigidbody2D>();
         _damageFlash = GetComponent<DamageFlash>();
     }
@@ -64,9 +69,7 @@ public class PlayerMovement : MonoBehaviour
     {
         InputMovement();
         ReproducirPasos();
-
         
-
         // Girar personaje
 
         if (horizontalMovement < 0 && _isFacinRight == true)
@@ -84,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
         Move();
     }
 
-    private void InputMovement()
+    public void InputMovement()
     {
         // Moviento de personaje 
 
@@ -100,14 +103,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (_direccion != Vector2.zero)
         {
-        _direccionApunta = _direccion.normalized;
-
+            _direccionApunta = _direccion.normalized;
         }
         
         _animator.SetBool("idle", moveDirection == Vector2.zero);
-
-
-
     }
 
     private void Move()
@@ -147,8 +146,17 @@ public class PlayerMovement : MonoBehaviour
         _damageFlash.LlamarFlashDaño();
         StartCoroutine(Cooldown(1f));
     }
-    
-    
+
+    public void RecibirVida(int vida = 1)
+    {
+
+        vidaActual += vida;
+        vidaActual = Mathf.Clamp(vidaActual, 0, _maxVida);
+
+        _healthSystem.ActualizarCorazones(vidaActual);
+    }
+
+
     private IEnumerator Cooldown(float segundos)
     {
         _esInmune = true;
@@ -163,8 +171,37 @@ public class PlayerMovement : MonoBehaviour
             RecibirDaño();
             Debug.Log($"Ahora tienes: {vidaActual}");
         }
+
+        if (collision.CompareTag("noPaso"))
+        {
+            _weaponShoot._puedeDisparar = false;
+        }
+
+        if (collision.CompareTag("noPaso"))
+        {
+            cruzArrojadiza.canShoot = false;
+        }
+
     }
-    
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("noPaso"))
+        {
+            _weaponShoot._puedeDisparar = true;
+        }
+
+        if (collision.CompareTag("noPaso"))
+        {
+            cruzArrojadiza.canShoot = true;
+        }
+
+    }
+
+
+
+
+
     // Agregar Puntos de sangre al jugador
 
     public void AgregarBloodPoints(int bloodpoints)

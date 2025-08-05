@@ -16,9 +16,13 @@ public class BalaHit : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             if(_haColisionadp) return;
+            Rigidbody2D rbEnemy = other.GetComponent<Rigidbody2D>();
             EnemyController enemigo = other.GetComponent<EnemyController>();
             if (enemigo != null)
             {
+                Vector2 retroceso = (other.transform.position - transform.position).normalized;
+                float fuerzaRetroceso = 600f;
+                rbEnemy.AddForce(retroceso * fuerzaRetroceso);
                 enemigo.RecibirDaño(_danio);
                 _haColisionadp = true;
                 Destroy(this.gameObject);
