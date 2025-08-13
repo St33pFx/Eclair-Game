@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class Drop : MonoBehaviour
 {
+
     public int bloodPint = 50;
-    [SerializeField] private int xpAmount = 10;                
+    [SerializeField] private int xpAmount = 10;
 
 
     // Referencia Jugador
@@ -32,7 +33,7 @@ public class Drop : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
+
         if (other.gameObject.CompareTag("Player"))
         {
             var pm = other.GetComponent<PlayerMovement>();
@@ -46,16 +47,27 @@ public class Drop : MonoBehaviour
 
             Destroy(gameObject);
         }
+        else if (other.gameObject.CompareTag("Ritual"))
+        {
+            if (Altar.llenarRitual <= 5)
+            {
+                Altar.llenarRitual++;
+
+                Destroy(gameObject);
+            }
+
+
+        }
     }
-    
-    
+
+
     private void Atraccion()
     {
         float distancia = Vector2.Distance((Vector2)player.transform.position, (Vector2)transform.position);
 
         if (distancia <= radioAtraccion)
         {
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, velocidadAtraccion  * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, velocidadAtraccion * Time.deltaTime);
 
         }
     }

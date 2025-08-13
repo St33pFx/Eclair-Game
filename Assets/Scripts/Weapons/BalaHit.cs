@@ -3,19 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using Enemy;
 using UnityEngine;
+using Nucleo;
 
 public class BalaHit : MonoBehaviour
 {
     private int _danio = 1;
     private bool _haColisionadp = false;
-    
 
-    
+
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy"))
         {
-            if(_haColisionadp) return;
+            if (_haColisionadp) return;
             Rigidbody2D rbEnemy = other.GetComponent<Rigidbody2D>();
             EnemyController enemigo = other.GetComponent<EnemyController>();
             if (enemigo != null)
@@ -24,6 +25,21 @@ public class BalaHit : MonoBehaviour
                 float fuerzaRetroceso = 600f;
                 rbEnemy.AddForce(retroceso * fuerzaRetroceso);
                 enemigo.RecibirDaño(_danio);
+                _haColisionadp = true;
+                Destroy(this.gameObject);
+            }
+        }
+        if (other.CompareTag("Nucleo"))
+        {
+            if (_haColisionadp) return;
+            Rigidbody2D rbNucleo = other.GetComponent<Rigidbody2D>();
+            NucleoManager nucleo = other.GetComponent<NucleoManager>();
+            if (nucleo != null)
+            {
+                Vector2 retroceso = (other.transform.position - transform.position).normalized;
+                float fuerzaRetroceso = 600f;
+                rbNucleo.AddForce(retroceso * fuerzaRetroceso);
+                nucleo.RecibirDaño(_danio);
                 _haColisionadp = true;
                 Destroy(this.gameObject);
             }

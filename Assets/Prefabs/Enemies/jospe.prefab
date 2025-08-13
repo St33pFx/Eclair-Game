@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 2662499723062724107}
   - component: {fileID: 7100426829691073589}
   - component: {fileID: 5575050086254243304}
-  - component: {fileID: -2360852780864241265}
   m_Layer: 7
   m_Name: jospe
   m_TagString: Enemy
@@ -257,7 +256,7 @@ MonoBehaviour:
   - {x: 0.1651113, y: -0.04455495, z: 0}
   m_ShapePathHash: 431201731
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1696
+  m_InstanceId: -1342
   m_LocalBounds:
     m_Center: {x: -0.17873988, y: 0.22376668, z: 0}
     m_Extent: {x: 0.34385118, y: 0.26832163, z: 0}
@@ -302,8 +301,9 @@ MonoBehaviour:
   objetoDrop: {fileID: 7383888815404154450, guid: 3642a8d254f0d9f41a2726b12ae9d79e, type: 3}
   enemyRb: {fileID: 3349978759401935280}
   SonidoImpactos: {fileID: 8300000, guid: 3990da8848a63624994f89264b8de936, type: 3}
-  despawnDistance: 20
+  despawnDistance: 10
   direccion: {x: 0, y: 0}
+  player: {fileID: 2788753166833511913, guid: 008e8b741e929874da892c5c3c53759d, type: 3}
 --- !u!114 &2097523847936079568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,28 +406,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 927f4d271ab434542a9b69568a05d81d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-2360852780864241265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5232860725420068961}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e5737c90dbf6704aa80fb4166ddb6e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemigoDamage: 1
-  velocidadMovimiento: 3
-  radio: 20
-  vidaMax: 2
-  _vidaActual: 2
-  objetoDrop: {fileID: 7383888815404154450, guid: 3642a8d254f0d9f41a2726b12ae9d79e, type: 3}
-  enemyRb: {fileID: 7091649823436786256, guid: 8d3e8a39c3ffdfc4cb7a0c8f8c2c0b48, type: 3}
-  SonidoImpactos: {fileID: 8300000, guid: 3990da8848a63624994f89264b8de936, type: 3}
-  despawnDistance: 13
-  direccion: {x: 0, y: 0}
 --- !u!1 &7480858299691667975
 GameObject:
   m_ObjectHideFlags: 0

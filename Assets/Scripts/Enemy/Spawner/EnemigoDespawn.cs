@@ -8,15 +8,15 @@ public class EnemigoDespawn : MonoBehaviour
     private Transform jugadorPos;
     private EnemigoSpawner spawner;
     private bool _puedeDespawn = false;
-    
+
     [SerializeField] private float despawnDistancia = 9f;
-    [SerializeField] private float tiempoProteccionDespawn = 10f;   
+    [SerializeField] private float tiempoProteccionDespawn = 10f;
     private void Awake()
     {
         if (jugadorPos == null)
         {
-        jugadorPos = GameObject.FindWithTag("Player").transform;
-            
+            jugadorPos = GameObject.FindWithTag("Player").transform;
+
         }
         StartCoroutine(ProteccionDespawn());
     }
@@ -45,7 +45,7 @@ public class EnemigoDespawn : MonoBehaviour
 
     public void SetSpawner(EnemigoSpawner spwn)
     {
-        spawner = spwn; 
+        spawner = spwn;
     }
 
     private IEnumerator ProteccionDespawn()
@@ -53,5 +53,15 @@ public class EnemigoDespawn : MonoBehaviour
         _puedeDespawn = false;
         yield return new WaitForSeconds(tiempoProteccionDespawn);
         _puedeDespawn = true;
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Ritual"))
+        {
+            if (Altar.Matar == true)
+            {
+                Destroy(this.gameObject);
+            }
+        }
     }
 }
