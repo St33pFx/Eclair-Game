@@ -166,8 +166,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 823316549
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 527367747, guid: 348b1e7b755008d469468b19236fc8d8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -452,7 +452,7 @@ MonoBehaviour:
   - {x: -0.19612217, y: 0.023376465, z: 0}
   m_ShapePathHash: 1141061685
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1346
+  m_InstanceId: -1576
   m_LocalBounds:
     m_Center: {x: 0.10834551, y: 0.20732307, z: 0}
     m_Extent: {x: 0.45769167, y: 0.18710852, z: 0}
@@ -580,6 +580,8 @@ MonoBehaviour:
   SonidoImpactos: {fileID: 8300000, guid: 3990da8848a63624994f89264b8de936, type: 3}
   despawnDistance: 13
   direccion: {x: 0, y: 0}
+  spawnArea: {fileID: 0}
+  player: {fileID: 2788753166833511913, guid: 008e8b741e929874da892c5c3c53759d, type: 3}
 --- !u!1 &7156194497721845201
 GameObject:
   m_ObjectHideFlags: 0

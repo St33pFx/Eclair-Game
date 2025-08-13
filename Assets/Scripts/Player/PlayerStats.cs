@@ -14,6 +14,7 @@ public class PlayerStats : MonoBehaviour
     public int experience = 0;
     public int level = 1;
     public int experienceCap;
+    
 
     //Clase para definir el rango de nivel
     [System.Serializable]
@@ -30,6 +31,8 @@ public class PlayerStats : MonoBehaviour
     public Image xpFillImage;
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI oleadaText;
+    public int oleadaNumber = 1;
     public int totalBloodPoints;
     public GameObject levelUp;
 
@@ -42,6 +45,7 @@ public class PlayerStats : MonoBehaviour
        UpdateExpBar();
         UpdateLevelText();
         UpdateScoreText();
+        UpdateOleadaText();
     }
 
     public void AumentarExperiencia(int amount)
@@ -85,6 +89,18 @@ public class PlayerStats : MonoBehaviour
     void UpdateLevelText()
     {
         levelText.text = "LV - " + level.ToString();
+    }
+
+    public void AumentarOleadas(int numOleada)
+    {
+        oleadaNumber += numOleada;
+        UpdateOleadaText();
+    }
+
+
+    public void UpdateOleadaText()
+    {
+        oleadaText.text = oleadaNumber.ToString("D2");
     }
 
     public void AumentarBloodPoints(int amount)

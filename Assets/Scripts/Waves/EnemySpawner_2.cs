@@ -34,19 +34,28 @@ public class EnemySpawner_2 : MonoBehaviour
     public float waveInterval;
     public bool puedeSpawn = true;
 
-    public LayerMask layerObstaculo;
-    public float radioChequeo = 0.5f;
+    public LayerMask layerPermitidaParaSpawn;
+    public float radioChequeo;
+    PlayerStats playerStats;
+
+    public LayerMask muros;
+
 
     [Header("Spawn Position")]
     public List<Transform> relativeSpawnPoints;
+    public Collider2D playableArea;
 
-    
+
     Transform player;
+
+    private bool avanzandoWave = false;
+    private bool todasWavesCompletadas = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        playerStats = GameObject.FindWithTag("Player").GetComponent<PlayerStats>();
         player = GameObject.FindWithTag("Player").transform;
         CalcularWaveCuota();
     }
@@ -54,8 +63,14 @@ public class EnemySpawner_2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (waveActualNumero < waves.Count && waves[waveActualNumero].spawnCount == 0)
+        if(todasWavesCompletadas) return;
+        if(waveActualNumero >= waves.Count) return;
+
+        bool waveTerminada = waves[waveActualNumero].spawnCount >= waves[waveActualNumero].waveQuota && enemiesVivos == 0;
+
+        if (!avanzandoWave && waveActualNumero < waves.Count && waveTerminada)
         {
+            avanzandoWave = true;
             StartCoroutine(IniciarSiguienteWave());
         }
                 
@@ -75,12 +90,29 @@ public class EnemySpawner_2 : MonoBehaviour
     {
         yield return new WaitForSeconds(waveInterval);
 
-        if(waveActualNumero < waves.Count -1)
+        if (waveActualNumero < waves.Count - 1)
         {
             waveActualNumero++;
+            playerStats.AumentarOleadas(waveActualNumero);
+            PrepararWave(waveActualNumero);
             CalcularWaveCuota();
         }
+        else
+        {
+            todasWavesCompletadas = true;
+        }
+        avanzandoWave = false;
     }
+
+    void PrepararWave(int idx)
+    {
+        waves[idx].spawnCount = 0;
+        foreach (var g in waves[idx].enemyGroups) g.spawnCount = 0;
+        enemigosMaximosCompletado = false;
+        puedeSpawn = true;
+        spawnTimer = 0f;
+    }
+
 
     void CalcularWaveCuota()
     {
@@ -110,6 +142,7 @@ public class EnemySpawner_2 : MonoBehaviour
                         return;
                     }
 
+
                     bool spawnHecho = false;
                     int intentos = 0;
                     int maxIntentos = 10;
@@ -136,7 +169,7 @@ public class EnemySpawner_2 : MonoBehaviour
                         Debug.DrawRay(posicion, Vector2.right * radioChequeo, Color.red, 1f);
 
                         // Checar si hay un collider con la layer Obstaculo en esa zona
-                        Collider2D colision = Physics2D.OverlapCircle(posicion, radioChequeo, layerObstaculo);
+                        Collider2D colision = Physics2D.OverlapCircle(posicion, radioChequeo, layerPermitidaParaSpawn);
 
                         // Si no hay colisión con obstáculos, podemos spawnear
                         if (colision == null)

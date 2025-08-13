@@ -86,11 +86,11 @@ MonoBehaviour:
   vignetteSmooth: 1.85
   vignetteRound: 15
   blur: 0
-  bleed: 5.1
-  smidge: 12.7
-  scanlinesStrength: 9
-  apertureStrength: 4
-  shadowlines: 0
+  bleed: 0
+  smidge: 0
+  scanlinesStrength: 7.36
+  apertureStrength: 5.19
+  shadowlines: -50
   shadowlinesSpeed: 0
   shadowlinesAlpha: 0
   noiseSize: 0
@@ -101,8 +101,8 @@ MonoBehaviour:
   gamma: 1
   red: 1
   green: 1
-  blue: 1.197
-  chromaticAberration: 1
-  redOffset: {x: 0.1, y: 0.1}
-  blueOffset: {x: 0, y: -0.14}
-  greenOffset: {x: -0.1, y: 0.1}
+  blue: 1
+  chromaticAberration: 0.2
+  redOffset: {x: 0.02, y: 0.02}
+  blueOffset: {x: 0, y: -0.028}
+  greenOffset: {x: -0.02, y: 0.02}

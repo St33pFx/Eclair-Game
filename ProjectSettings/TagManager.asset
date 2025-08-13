@@ -10,6 +10,10 @@ TagManager:
   - noPaso
   - Arma
   - noSpawn
+  - Muros
+  - Ground
+  - Ritual
+  - Nucleo
   layers:
   - Default
   - TransparentFX
@@ -24,12 +28,12 @@ TagManager:
   - NoPas
   - Player
   - Terrain
+  - Muros
+  - Ground
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - Obstaculosss
   - 
   - 
   - 

@@ -243,8 +243,9 @@ MonoBehaviour:
   objetoDrop: {fileID: 7383888815404154450, guid: 3642a8d254f0d9f41a2726b12ae9d79e, type: 3}
   enemyRb: {fileID: 8955217911468957616}
   SonidoImpactos: {fileID: 8300000, guid: 3990da8848a63624994f89264b8de936, type: 3}
-  despawnDistance: 20
+  despawnDistance: 10
   direccion: {x: 0, y: 0}
+  player: {fileID: 2788753166833511913, guid: 008e8b741e929874da892c5c3c53759d, type: 3}
 --- !u!114 &706785145405597881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,7 +280,7 @@ MonoBehaviour:
   - {x: 0.35406202, y: -0.071547985, z: 0}
   m_ShapePathHash: -205736663
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1650
+  m_InstanceId: -1470
   m_LocalBounds:
     m_Center: {x: -0.08426452, y: 0.22531629, z: 0}
     m_Extent: {x: 0.43832654, y: 0.29686427, z: 0}

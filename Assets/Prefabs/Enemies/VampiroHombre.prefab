@@ -236,6 +236,9 @@ MonoBehaviour:
   objetoDrop: {fileID: 7383888815404154450, guid: 3642a8d254f0d9f41a2726b12ae9d79e, type: 3}
   enemyRb: {fileID: 2640140001740690019}
   SonidoImpactos: {fileID: 8300000, guid: 3990da8848a63624994f89264b8de936, type: 3}
+  despawnDistance: 20
+  direccion: {x: 0, y: 0}
+  player: {fileID: 2788753166833511913, guid: 008e8b741e929874da892c5c3c53759d, type: 3}
 --- !u!95 &5174883768767426669
 Animator:
   serializedVersion: 5
