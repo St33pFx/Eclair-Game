@@ -51,6 +51,10 @@ public class EnemySpawner_2 : MonoBehaviour
     private bool avanzandoWave = false;
     private bool todasWavesCompletadas = false;
 
+    void Awake()
+    {
+        Debug.Log($"[Spawner] Awake id={GetInstanceID()}");
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -63,18 +67,21 @@ public class EnemySpawner_2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(todasWavesCompletadas) return;
-        if(waveActualNumero >= waves.Count) return;
+        if (todasWavesCompletadas) return;
+        if (waveActualNumero >= waves.Count) return;
 
-        bool waveTerminada = waves[waveActualNumero].spawnCount >= waves[waveActualNumero].waveQuota && enemiesVivos == 0;
+        bool waveTerminada =
+            waves[waveActualNumero].spawnCount >= waves[waveActualNumero].waveQuota
+            && enemiesVivos == 0;
 
-        if (!avanzandoWave && waveActualNumero < waves.Count && waveTerminada)
+        if (!avanzandoWave && waveTerminada)
         {
+            Debug.Log($"[Spawner] Wave terminada idx={waveActualNumero} " +
+                      $"spawnCount={waves[waveActualNumero].spawnCount}/" +
+                      $"{waves[waveActualNumero].waveQuota}, vivos={enemiesVivos}");
             avanzandoWave = true;
             StartCoroutine(IniciarSiguienteWave());
         }
-                
-
 
         spawnTimer += Time.deltaTime;
 
@@ -82,18 +89,22 @@ public class EnemySpawner_2 : MonoBehaviour
         {
             spawnTimer = 0f;
             SpawnEnemigos();
-
         }
     }
 
     IEnumerator IniciarSiguienteWave()
     {
+        Debug.Log($"[Spawner] Iniciar siguiente (antes) idx={waveActualNumero}");
         yield return new WaitForSeconds(waveInterval);
 
         if (waveActualNumero < waves.Count - 1)
         {
             waveActualNumero++;
-            playerStats.AumentarOleadas(waveActualNumero);
+            Debug.Log($"[Spawner] Avanzó a idx={waveActualNumero}");
+
+            
+            playerStats.AumentarOleadas(waveActualNumero + 1);
+
             PrepararWave(waveActualNumero);
             CalcularWaveCuota();
         }
@@ -103,6 +114,7 @@ public class EnemySpawner_2 : MonoBehaviour
         }
         avanzandoWave = false;
     }
+
 
     void PrepararWave(int idx)
     {
@@ -142,20 +154,9 @@ public class EnemySpawner_2 : MonoBehaviour
                         return;
                     }
 
-
                     bool spawnHecho = false;
                     int intentos = 0;
                     int maxIntentos = 10;
-
-
-                    //Instantiate(enemyGroup.enemyPrefab, player.position + relativeSpawnPoints[Random.Range(0, relativeSpawnPoints.Count)].position, Quaternion.identity);
-
-                    //var pt = relativeSpawnPoints[Random.Range(0, relativeSpawnPoints.Count)];
-                    //Instantiate(enemyGroup.enemyPrefab, pt.position, Quaternion.identity);
-
-                    //enemyGroup.spawnCount++;
-                    //waves[waveActualNumero].spawnCount++;
-                    //enemiesVivos++;
 
                     while (!spawnHecho && intentos < maxIntentos)
                     {

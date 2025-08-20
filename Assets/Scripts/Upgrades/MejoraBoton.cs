@@ -1,17 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class MejoraBoton : MonoBehaviour
 {
-    [SerializeField] private Mejoras Mejoras_script;
+    [SerializeField] private Mejoras mejoras;   
+    public TipoMejora tipo;                    
+    public int aumento = 10;                   
 
-    public void Mejora()
+    // asigna este método al OnClick del Button
+    public void OnClickMejora()
     {
-        string Mejora_Seleccionada = gameObject.transform.GetChild(0).transform.GetChild(0).GetComponent< TMP_Text> ().text;
-        Mejoras_script.MejorarSeleccionada(Mejora_Seleccionada);
-        
+        if (!mejoras)
+        {
+            Debug.LogWarning("Mejoras no asignado en MejoraBoton.", this);
+            return;
+        }
+        mejoras.AplicarSeleccion(tipo, aumento);
     }
 }

@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 302418671009621716}
   - component: {fileID: 5294336925623935114}
   - component: {fileID: 785895755402315849}
+  - component: {fileID: 7929496297922599530}
   m_Layer: 0
   m_Name: nucleo
   m_TagString: Nucleo
@@ -292,6 +293,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960f5e2754af05f4ebe144f1464e196b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7929496297922599530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4784471285295220392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 767f8018198433546a4f67fd6d85fcac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nucleosUI: {fileID: 0}
 --- !u!1 &4961491288154239869
 GameObject:
   m_ObjectHideFlags: 0

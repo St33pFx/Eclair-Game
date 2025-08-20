@@ -202,7 +202,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3965101191350022419}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 716298b96f86d6044946e18baccb361c, type: 3}
   m_Name: 
@@ -245,6 +245,7 @@ MonoBehaviour:
   SonidoImpactos: {fileID: 8300000, guid: 3990da8848a63624994f89264b8de936, type: 3}
   despawnDistance: 10
   direccion: {x: 0, y: 0}
+  spawnArea: {fileID: 0}
   player: {fileID: 2788753166833511913, guid: 008e8b741e929874da892c5c3c53759d, type: 3}
 --- !u!114 &706785145405597881
 MonoBehaviour:

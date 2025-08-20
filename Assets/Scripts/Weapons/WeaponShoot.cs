@@ -31,7 +31,11 @@ public class WeaponShoot : MonoBehaviour
     private void Update()
     {
         if (GameManager.juegoPausado) return;
-        EjecutarDisparo();
+        if (_puedeDisparar)
+        {
+            EjecutarDisparo();
+        }
+        
         
     }
 
@@ -44,15 +48,19 @@ public class WeaponShoot : MonoBehaviour
     
     private void EjecutarDisparo()
     {
-        if (Input.GetMouseButtonDown(0) && _puedeDisparar == true)
+        if (_puedeDisparar)
         {
-            GameObject _balaCLon = Instantiate(proyectilPrefab, shootPoint.transform.position, shootPoint.transform.rotation);
-            _balaCLon.GetComponent<Rigidbody2D>().velocity = shootPoint.right * velocidadBala;
-            _puedeDisparar = false;
-            CameraShakeManager.instance.CameraShake(impulseSource);
-            DispararSonido();
-            StartCoroutine(CoolDown());
+            if (Input.GetMouseButtonDown(0) && _puedeDisparar == true)
+            {
+                GameObject _balaCLon = Instantiate(proyectilPrefab, shootPoint.transform.position, shootPoint.transform.rotation);
+                _balaCLon.GetComponent<Rigidbody2D>().velocity = shootPoint.right * velocidadBala;
+                _puedeDisparar = false;
+                CameraShakeManager.instance.CameraShake(impulseSource);
+                DispararSonido();
+                StartCoroutine(CoolDown());
+            }
         }
+        
 
         
     }

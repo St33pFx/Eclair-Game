@@ -71,7 +71,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 1.18
-  m_PointLightOuterRadius: 4.41
+  m_PointLightOuterRadius: 4.851
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -254,12 +254,17 @@ MonoBehaviour:
   vidaActual: 5
   speedMovement: 4
   moveDirection: {x: 0, y: 0}
-  cruzArrojadiza: {fileID: 1594773434788034317}
+  canMove: 1
   _weaponShoot: {fileID: 8244224709917277582, guid: f2f6a8611dffbb04b8ca03fab8e2cc75, type: 3}
+  cruzArrojadiza: {fileID: 1594773434788034317}
   xp: {fileID: 0}
   _panelMuerte: {fileID: 0}
   fuentePasos: {fileID: 3555183937817241946}
   sonidoPasos: {fileID: 8300000, guid: 56daf98a789c8af4180a345a726abba2, type: 3}
+  dashEnabled: 0
+  dashSpeed: 14
+  dashTime: 0.15
+  dashCooldown: 0.5
 --- !u!95 &7803668724351081816
 Animator:
   serializedVersion: 5
@@ -534,7 +539,7 @@ MonoBehaviour:
   - {x: 0.23237991, y: 0.026876792, z: 0}
   m_ShapePathHash: 657960463
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1596
+  m_InstanceId: 55112
   m_LocalBounds:
     m_Center: {x: -0.1215533, y: 0.30950528, z: 0}
     m_Extent: {x: 0.358806, y: 0.28262848, z: 0}
@@ -596,13 +601,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b97a1965e715bd48a077ccf8c3c5526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasDash: 1
+  player: {fileID: 1789528120388408567}
+  cruzScript: {fileID: 1594773434788034317}
+  visionLight: {fileID: 1615519755299543208}
+  hasDash: 0
   hasCruzArrojadiza: 0
   projectileSpeedMult: 1
-  projectileDamageMult: 1.0404
-  pierceExtra: 0
-  visionRadiusExtra: 10
-  altarDamageMult: 1.0404
+  projectileDamageMult: 1.1040808
+  pierceExtra: 2
+  altarDamageMult: 1.0824322
 --- !u!1 &7928058265454282731
 GameObject:
   m_ObjectHideFlags: 0

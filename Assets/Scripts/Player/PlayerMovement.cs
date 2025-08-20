@@ -1,44 +1,41 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Enemy;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Vital Personake
-    [SerializeField]private int _maxVida = 5;
+    // Vida
+    [SerializeField] private int _maxVida = 5;
     public int vidaActual;
     private bool _esInmune = false;
-    
+
     // Movimiento
     public float speedMovement = 2f;
     public Vector2 moveDirection;
     private bool _isFacinRight = true;
+    public bool canMove = true;
 
     public static Vector2 _direccionApunta = Vector2.right;
-
-    public static Vector2 _orientacionObjeto;
     public static float angulo;
     public static Quaternion rotacin;
 
-    // Input Movimiento
     float horizontalMovement;
     float verticalMovement;
-    
+
     private DamageFlash _damageFlash;
     private Animator _animator;
     private HealthSystem _healthSystem;
-    [SerializeField] private CruzArrojadiza cruzArrojadiza;
 
-    // Referencias
-    public static Rigidbody2D _rigidbody;
+    [Header("Armas")]
     [SerializeField] private WeaponShoot _weaponShoot;
+    [SerializeField] private CruzArrojadiza cruzArrojadiza;   // <- MISMA instancia que usa el player
+
+    public static Rigidbody2D _rigidbody;
 
     [SerializeField] private ExperienceManager xp;
     [SerializeField] private GameObject _panelMuerte;
-    
+
     [SerializeField] private AudioSource fuentePasos;
     [SerializeField] private AudioClip sonidoPasos;
 
@@ -46,50 +43,65 @@ public class PlayerMovement : MonoBehaviour
     private int _NuevoNivel = 50;
     private int _bloodPoints;
 
+    [Header("Dash")]
+    [SerializeField] bool dashEnabled = false;
+    [SerializeField] float dashSpeed = 14f;
+    [SerializeField] float dashTime = 0.15f;
+    [SerializeField] float dashCooldown = 0.5f;
+
+    bool dashing;
+    bool dashCD;
+    Vector2 lastMoveDir = Vector2.right;
+
+    // Estado de cruz
+    private bool cruzDesbloqueada = false;
+
+    public void EnableDash(bool on) => dashEnabled = on;
+
     private void Awake()
     {
-        Debug.Log($"Hola amiguitos!");
         vidaActual = _maxVida;
         _animator = GetComponent<Animator>();
         _healthSystem = FindObjectOfType<HealthSystem>();
-        
     }
 
-    // Start is called before the first frame update
     private void Start()
     {
-        _weaponShoot = GameObject.FindGameObjectWithTag("Arma").GetComponent<WeaponShoot>();
+        if (!_weaponShoot)
+            _weaponShoot = GameObject.FindGameObjectWithTag("Arma").GetComponent<WeaponShoot>();
 
         _rigidbody = GetComponent<Rigidbody2D>();
         _damageFlash = GetComponent<DamageFlash>();
+
+        // Asegura que la cruz arranca deshabilitada
+        if (cruzArrojadiza)
+        {
+            cruzArrojadiza.enabled = false;
+            cruzArrojadiza.canShoot = false;
+        }
+
     }
 
-    // Update is called once per frame
     void Update()
     {
         InputMovement();
         ReproducirPasos();
-        
-        // Girar personaje
 
-        if (horizontalMovement < 0 && _isFacinRight == true)
-        {
-            FlipCharacter();
-        }
-        else if (horizontalMovement > 0 && _isFacinRight == false)
-        {
-            FlipCharacter();
-        }
+        if (moveDirection.sqrMagnitude > 0.01f)
+            lastMoveDir = moveDirection.normalized;
+
+        if (dashEnabled && canMove && !dashing && !dashCD && Input.GetKeyDown(KeyCode.LeftShift))
+            StartCoroutine(DashRoutine());
+
+        if (horizontalMovement < 0 && _isFacinRight) FlipCharacter();
+        else if (horizontalMovement > 0 && !_isFacinRight) FlipCharacter();
     }
 
-    void FixedUpdate()
-    {
-        Move();
-    }
+    void FixedUpdate() => Move();
 
     public void InputMovement()
     {
-        // Moviento de personaje 
+        if (!canMove) return;
 
         horizontalMovement = Input.GetAxisRaw("Horizontal");
         verticalMovement = Input.GetAxisRaw("Vertical");
@@ -100,118 +112,91 @@ public class PlayerMovement : MonoBehaviour
         rotacin = Quaternion.Euler(0, 0, angulo - 90);
 
         Vector2 _direccion = new Vector2(horizontalMovement, verticalMovement);
-
         if (_direccion != Vector2.zero)
-        {
             _direccionApunta = _direccion.normalized;
-        }
-        
+
         _animator.SetBool("idle", moveDirection == Vector2.zero);
     }
 
     private void Move()
     {
-        _rigidbody.velocity = new Vector2(moveDirection.x * speedMovement, moveDirection.y * speedMovement);
+        if (dashing)
+            _rigidbody.velocity = lastMoveDir * dashSpeed;
+        else
+            _rigidbody.velocity = moveDirection * speedMovement;
     }
 
     private void FlipCharacter()
     {
-        Vector3 currentScale = gameObject.transform.localScale;
-        currentScale.x *= -1;
-        gameObject.transform.localScale = currentScale;
-
+        var s = transform.localScale;
+        s.x *= -1;
+        transform.localScale = s;
         _isFacinRight = !_isFacinRight;
     }
 
     public void RecibirDaño(int daño = 1)
     {
-        if(_esInmune) return;
-        
-        vidaActual -= daño;
-        vidaActual = Mathf.Clamp(vidaActual, 0, _maxVida);
-        
-        _healthSystem.ActualizarCorazones(vidaActual);
+        if (_esInmune) return;
 
-      
+        vidaActual = Mathf.Clamp(vidaActual - daño, 0, _maxVida);
+        _healthSystem.ActualizarCorazones(vidaActual);
 
         if (vidaActual <= 0)
         {
-            vidaActual = 0;
             _panelMuerte.SetActive(true);
             GameManager.Pausa();
-            this.gameObject.SetActive(false);
-            return; 
+            gameObject.SetActive(false);
+            return;
         }
-    
+
         _damageFlash.LlamarFlashDaño();
         StartCoroutine(Cooldown(1f));
     }
 
     public void RecibirVida(int vida = 1)
     {
-
-        vidaActual += vida;
-        vidaActual = Mathf.Clamp(vidaActual, 0, _maxVida);
-
+        vidaActual = Mathf.Clamp(vidaActual + vida, 0, _maxVida);
         _healthSystem.ActualizarCorazones(vidaActual);
     }
 
-
-    private IEnumerator Cooldown(float segundos)
+    private IEnumerator Cooldown(float s)
     {
         _esInmune = true;
-        yield return new WaitForSeconds(segundos);
+        yield return new WaitForSeconds(s);
         _esInmune = false;
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D c)
     {
-        if (collision.CompareTag("Enemy") && _esInmune == false)
-        {
+        if (c.CompareTag("Enemy") && !_esInmune)
             RecibirDaño();
-            Debug.Log($"Ahora tienes: {vidaActual}");
-        }
 
-        if (collision.CompareTag("noPaso"))
+        if (c.CompareTag("noPaso"))
         {
-            _weaponShoot._puedeDisparar = false;
+            if (_weaponShoot) _weaponShoot._puedeDisparar = false;
+            if (cruzArrojadiza) cruzArrojadiza.canShoot = false;
         }
-
-        if (collision.CompareTag("noPaso"))
-        {
-            cruzArrojadiza.canShoot = false;
-        }
-
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D c)
     {
-        if (collision.CompareTag("noPaso"))
-        {
-            _weaponShoot._puedeDisparar = true;
-        }
+        if (!c.CompareTag("noPaso")) return;
 
-        if (collision.CompareTag("noPaso"))
-        {
+        if (_weaponShoot) _weaponShoot._puedeDisparar = true;
+
+        // Si la cruz está desbloqueada, vuelve a permitir disparo al salir de noPaso
+        if (cruzArrojadiza && cruzDesbloqueada)
             cruzArrojadiza.canShoot = true;
-        }
-
     }
 
-
-
-
-
-    // Agregar Puntos de sangre al jugador
-
+    // ---- Blood points
     public void AgregarBloodPoints(int bloodpoints)
     {
         xp.AgregarExperiencia(bloodpoints);
         bloodpoints += _bloodPoints;
-
         if (bloodpoints == _NuevoNivel)
         {
-            // Implementar nueva arma xd
+            // …
         }
     }
 
@@ -230,5 +215,38 @@ public class PlayerMovement : MonoBehaviour
             fuentePasos.Stop();
         }
     }
-    
+
+
+    public void SetCruzDesbloqueada(bool on)
+    {
+        cruzDesbloqueada = on;
+        if (cruzArrojadiza)
+            cruzArrojadiza.canShoot = on;   // habilita el tiro de la cruz inmediatamente
+        Debug.Log($"[PlayerMovement] CruzDesbloqueada = {on}");
+    }
+
+
+    private IEnumerator DashRoutine()
+    {
+        dashing = true;
+        Vector2 dir = lastMoveDir.sqrMagnitude < 0.01f ? (_isFacinRight ? Vector2.right : Vector2.left) : lastMoveDir;
+
+        float t = 0f;
+        while (t < dashTime)
+        {
+            _rigidbody.velocity = dir * dashSpeed;
+            t += Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        dashing = false;
+        _rigidbody.velocity = Vector2.zero;
+
+        dashCD = true;
+        yield return new WaitForSeconds(dashCooldown);
+        dashCD = false;
+    }
+
+ 
+
 }
