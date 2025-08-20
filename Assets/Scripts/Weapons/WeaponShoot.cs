@@ -1,69 +1,78 @@
-using Cinemachine;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using Cinemachine;
 using UnityEngine;
 
 public class WeaponShoot : MonoBehaviour
 {
+    [Header("Refs")]
     [SerializeField] private GameObject proyectilPrefab;
     [SerializeField] private Transform shootPoint;
-    [SerializeField] private float velocidadBala;
+    [SerializeField] private PlayerUpgrades upgrades;
 
-    private Rigidbody2D _rbProyectil;
-    private ArmaAim _aim;
-
-    private int _danio = 1;
-    private float _cooldownDisparo = 0.5f;
-    private float cooldownActual = 0f;
-    public bool _puedeDisparar = true;
     private CinemachineImpulseSource impulseSource;
-    
+
+    [Header("Disparo")]
+    [SerializeField] private float velocidadBala = 10f;
+    [SerializeField] private float baseCooldown = 0.5f;
+    [SerializeField] private float minCooldown = 0.2f;
+    [SerializeField] public bool _puedeDisparar = true;
+
+    [Header("Debug")]
+    [SerializeField] private float currentCooldown;
+
+    [Header("Audio")]
     [SerializeField] private AudioSource fuenteDisparo;
     [SerializeField] private AudioClip sonidoDisparo;
 
-    private void Start()
+    private void Awake()
     {
         impulseSource = GetComponent<CinemachineImpulseSource>();
+        if (!upgrades) upgrades = GetComponentInParent<PlayerUpgrades>();
+        if (!upgrades) upgrades = FindObjectOfType<PlayerUpgrades>();
     }
 
     private void Update()
     {
         if (GameManager.juegoPausado) return;
-        EjecutarDisparo();
-        
+        if (!_puedeDisparar) return;
+
+        if (Input.GetMouseButtonDown(0))
+            Disparar();
     }
 
-    private IEnumerator CoolDown()
+    public void Disparar()
     {
-        
-        yield return new WaitForSeconds(_cooldownDisparo);
+        float speedMult = (upgrades ? Mathf.Max(1f, upgrades.projectileSpeedMult) : 1f);
+        float fireMult = (upgrades ? Mathf.Max(1f, upgrades.fireRateMult) : 1f);
+
+        GameObject bala = Instantiate(proyectilPrefab, shootPoint.position, shootPoint.rotation);
+
+        // --- NUEVO: setear daño y perforación en el proyectil ---
+        var proj = bala.GetComponent<Projectile>();
+        if (proj)
+        {
+            float dmg = upgrades ? upgrades.GetProjectileDamage() : 1f;   // 1.0 + 0.5*steps
+            int pier = upgrades ? upgrades.GetMaxTargetsHit() : 1;    // 1 + pierceExtra
+            proj.InitDamage(dmg, pier);
+        }
+
+        // velocidad
+        var rb = bala.GetComponent<Rigidbody2D>();
+        if (rb) rb.velocity = shootPoint.right * (velocidadBala * speedMult);
+
+        if (impulseSource) CameraShakeManager.instance.CameraShake(impulseSource);
+        if (sonidoDisparo && fuenteDisparo) fuenteDisparo.PlayOneShot(sonidoDisparo);
+
+        currentCooldown = Mathf.Max(minCooldown, baseCooldown / fireMult);
+        _puedeDisparar = false;
+        StartCoroutine(CooldownRutina(currentCooldown));
+    }
+
+    private IEnumerator CooldownRutina(float cd)
+    {
+        yield return new WaitForSeconds(cd);
         _puedeDisparar = true;
     }
-    
-    private void EjecutarDisparo()
-    {
-        if (Input.GetMouseButtonDown(0) && _puedeDisparar == true)
-        {
-            GameObject _balaCLon = Instantiate(proyectilPrefab, shootPoint.transform.position, shootPoint.transform.rotation);
-            _balaCLon.GetComponent<Rigidbody2D>().velocity = shootPoint.right * velocidadBala;
-            _puedeDisparar = false;
-            CameraShakeManager.instance.CameraShake(impulseSource);
-            DispararSonido();
-            StartCoroutine(CoolDown());
-        }
 
-        
-    }
-
-    
-    private void DispararSonido()
-    {
-        if (sonidoDisparo != null && fuenteDisparo != null)
-        {
-            fuenteDisparo.PlayOneShot(sonidoDisparo);
-        }
-    }
-    
+    public void SetUpgrades(PlayerUpgrades u) => upgrades = u;
 }

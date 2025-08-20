@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2597262303138446533}
   - component: {fileID: 3349043058920976507}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,8 @@ GameObject:
   - component: {fileID: 302418671009621716}
   - component: {fileID: 5294336925623935114}
   - component: {fileID: 785895755402315849}
-  m_Layer: 0
+  - component: {fileID: 7929496297922599530}
+  m_Layer: 9
   m_Name: nucleo
   m_TagString: Nucleo
   m_Icon: {fileID: 0}
@@ -292,6 +293,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960f5e2754af05f4ebe144f1464e196b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7929496297922599530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4784471285295220392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 767f8018198433546a4f67fd6d85fcac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nucleosUI: {fileID: 0}
 --- !u!1 &4961491288154239869
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6593116242793759112}
   - component: {fileID: 7803848384941062957}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Light 2D (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -384,7 +398,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7907014200295130465}
   - component: {fileID: 3390597513542817949}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Light 2D (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

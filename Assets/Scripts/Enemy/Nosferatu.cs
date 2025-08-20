@@ -3,6 +3,7 @@ using Enemy;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -40,7 +41,7 @@ public class Nosferatu : EnemyController
         spawner = FindObjectOfType<EnemySpawner_2>();
         if (spawner == null) Debug.LogError("[Nosferatu] No hay EnemySpawner_2 en escena.");
 
-        spawnArea = spawner != null ? spawner.playableArea : null; // <-- AQUÍ se asigna
+        spawnArea = spawner != null ? spawner.playableArea : null; 
         if (spawnArea == null) Debug.LogError("[Nosferatu] spawnArea NULL. Asigna 'Playable Area' en el Spawner.");
 
 
@@ -72,23 +73,11 @@ public class Nosferatu : EnemyController
             ReturnEnemy();
         }
     }
-     
-    //private void FixedUpdate()
-    //{
-    //    if (playerTransform == null) return;
+    public void MenosVida()
+    {
         
-    //    // Direccion crea un vector y NuevaDireccion crea el movimiento 
-    //    direccion = ((Vector2)(playerTransform.position - transform.position)).normalized;
-    //    Vector2 nuevaDireccion = (Vector2)transform.position + direccion * velocidadMovimiento * Time.fixedDeltaTime; 
-        
-    //    // If para evitar que se glitchee el nosferatu
-    //    // Vector distance devuelve la distancia entre puntos a y b
-    //    if (Vector2.Distance((Vector2)playerTransform.position, (Vector2)transform.position) > 0.1f)
-    //    {
-    //        // MovePosition mueve el rigid body a una posicion especificada, acuerdate papui 
-    //        enemyRb.MovePosition(nuevaDireccion);
-    //    }
-    //}
+    }
+
 
     public void EstablecerSpawn(EnemySpawner_2 spwn)
     {
@@ -161,18 +150,13 @@ public class Nosferatu : EnemyController
         transform.position = spawnPos;
         //transform.position = player.position + es.relativeSpawnPoints[Random.Range(0, es.relativeSpawnPoints.Count)].position;
     }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Ritual"))
+        {
+            _vidaActual = 1;
+            vidaMax = 1;    
+        }
 
-    //void MoverEnemigos()
-    //{
-    //    var pt = spawnPoint.relativeSpawnPoints[Random.Range(0, spawnPoint.relativeSpawnPoints.Count)];
-    //    Vector2 posicion = pt.position;
-
-    //    Collider2D collision = Physics2D.OverlapCircle(posicion, spawnPoint.radioChequeo, spawnPoint.layerPermitidaParaSpawn);
-    //    if (collision == null)
-    //    {
-    //        EnemySpawner_2 es = FindObjectOfType<EnemySpawner_2>();
-    //        transform.position = player.position + es.relativeSpawnPoints[Random.Range(0, es.relativeSpawnPoints.Count)].position;
-    //    }
-    //}
-
+    }
 }
