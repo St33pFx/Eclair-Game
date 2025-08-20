@@ -8,6 +8,8 @@ public class EnemigoDespawn : MonoBehaviour
     private Transform jugadorPos;
     private EnemigoSpawner spawner;
     private bool _puedeDespawn = false;
+    private EnemySpawner_2 es;
+
 
     [SerializeField] private float despawnDistancia = 9f;
     [SerializeField] private float tiempoProteccionDespawn = 10f;
@@ -19,6 +21,11 @@ public class EnemigoDespawn : MonoBehaviour
 
         }
         StartCoroutine(ProteccionDespawn());
+    }
+
+    private void Start()
+    {
+        es = FindObjectOfType<EnemySpawner_2>();
     }
 
     private void Update()
@@ -60,7 +67,9 @@ public class EnemigoDespawn : MonoBehaviour
         {
             if (Altar.Matar == true)
             {
+                es.OnEnemyKilled();
                 Destroy(this.gameObject);
+                
             }
         }
     }

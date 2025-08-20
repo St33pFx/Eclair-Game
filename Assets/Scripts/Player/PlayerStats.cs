@@ -93,10 +93,13 @@ public class PlayerStats : MonoBehaviour
 
     public void AumentarOleadas(int numOleada)
     {
-        oleadaNumber += numOleada;
+        // numOleada viene en "humano" (1,2,3...). Asegura que no baje ni duplique.
+        if (numOleada < oleadaNumber) return;           // evita retrocesos
+        if (numOleada == oleadaNumber) return;          // evita actualizar dos veces la misma
+
+        oleadaNumber = numOleada;                       //  asigna en lugar de sumar
         UpdateOleadaText();
     }
-
 
     public void UpdateOleadaText()
     {

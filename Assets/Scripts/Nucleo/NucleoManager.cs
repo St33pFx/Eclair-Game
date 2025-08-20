@@ -16,7 +16,8 @@ namespace Nucleo
             {
                 Vidanucleo.muertes++;
                 Nucleos.vidaActual = Vidanucleo.vidaTotal + Vidanucleo.muertes;
-                Destroy(gameObject);
+                GetComponent<NucleoDestruible>()?.Destruir();
+
             }
         }
     }

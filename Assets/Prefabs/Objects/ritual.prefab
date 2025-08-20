@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8356860906435954955}
   m_Layer: 0
   m_Name: ritual
-  m_TagString: Untagged
+  m_TagString: Ritual
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,7 +132,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.00000017881393, y: 0.00000008940697}
-  m_Size: {x: 2.12, y: 0.0001}
+  m_Size: {x: 2.42, y: 0.0001}
   m_Direction: 0
 --- !u!1 &6975909484884086452
 GameObject:
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Intensity: 1.89
   m_LightVolumeIntensity: 0.1
   m_LightVolumeIntensityEnabled: 1
-  m_ApplyToSortingLayers: 3b3e3e310000000045d0123167a451c1673476bc
+  m_ApplyToSortingLayers: 3b3e3e31
   m_LightCookieSprite: {fileID: 21300000, guid: 073ab0e66b998d8468f3c8520e556a54, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
